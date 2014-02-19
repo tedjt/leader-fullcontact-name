@@ -30,12 +30,11 @@ function middleware (apiKey) {
     if (!username) return next();
     debug('querying fullcontact with username %s ..', username);
     fullcontact.name.deducer({ username: username }, function (err, data) {
-      console.log(err);
       if (err) return next();
       extend(true, context, {fullcontact: {name: data}});
       if (accurate(data, username)) {
         details(data.nameDetails, person);
-        debug('Got Fullcontact name for username %s', username);
+        debug('Got Fullcontact name: %j for username %s', data.nameDetails, username);
       }
       next();
     });
